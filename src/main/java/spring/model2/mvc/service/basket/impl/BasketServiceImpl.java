@@ -62,6 +62,22 @@ public class BasketServiceImpl implements BasketService {
 		basketDao.deleteBasketList(userId);
 	}
 
+	@Override
+	public void updateBasketQuantity(Basket basket) throws Exception {
+		basketDao.updateBasketQuantity(basket);
+	}
+
+	@Override
+	public List<Basket> purchaseBasketList(String userId) throws Exception {
+		List<Basket> listBasket = new ArrayList<Basket>();
+		List<Basket> baskets=basketDao.purchaseBasketList(userId);
+		for (Basket basket : baskets) {
+			basket.setBasketProd(productDao.getProduct(basket.getProdNo()));
+			listBasket.add(basket);
+		}
+		return listBasket;
+	}
+
 //	public void setBasketDao(BasketDao basketDao) {
 //		this.basketDao = basketDao;
 //	}

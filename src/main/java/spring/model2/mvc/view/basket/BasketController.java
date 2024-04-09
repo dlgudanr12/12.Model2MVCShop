@@ -3,12 +3,14 @@ package spring.model2.mvc.view.basket;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,8 +20,11 @@ import spring.model2.mvc.common.Page;
 import spring.model2.mvc.common.Search;
 import spring.model2.mvc.service.basket.BasketService;
 import spring.model2.mvc.service.domain.Basket;
+import spring.model2.mvc.service.domain.Purchase;
 import spring.model2.mvc.service.domain.User;
+import spring.model2.mvc.service.product.ProductDao;
 import spring.model2.mvc.service.product.ProductService;
+import spring.model2.mvc.service.purchase.PurchaseService;
 import spring.model2.mvc.service.user.UserService;
 
 @Controller
@@ -29,6 +34,10 @@ public class BasketController {
 	@Autowired
 	@Qualifier("basketService")
 	private BasketService basketService;
+	
+	@Autowired
+	@Qualifier("purchaseService")
+	private PurchaseService purchaseService;
 
 	@Autowired
 	@Qualifier("productService")
@@ -120,6 +129,52 @@ public class BasketController {
 		modelAndView.setViewName("forward:/basket/listBasket");
 
 		System.out.println("[removeBasketList().GET end......]\n");
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value="purchaseBasketList", method = RequestMethod.GET)
+	public ModelAndView purchaseBasketListView(@ModelAttribute("search") Search search,
+			HttpSession session, ModelAndView modelAndView) throws Exception {
+
+		System.out.println("\n:: ==> purchaseBasketList().GET start......]");
+		User user = (User) session.getAttribute("user");
+
+		modelAndView.addObject("user",user);
+		modelAndView.addObject("list",basketService.purchaseBasketList( user.getUserId() ));
+		modelAndView.addObject("search", search);
+		modelAndView.setViewName("forward:/basket/purchaseBasketListView.jsp");
+
+		System.out.println("[purchaseBasketList().GET end......]\n");
+
+		return modelAndView;
+	}
+
+	@RequestMapping(value="purchaseBasketList", method = RequestMethod.POST)
+	public ModelAndView purchaseBasketList(@RequestParam("buyerId") String buyerId,@RequestParam("prodNo") int[] prodNo,
+			@RequestParam("tranQuantity") int[] tranQuantity,@ModelAttribute("purchase") Purchase purchase, 
+			@ModelAttribute("search") Search search,HttpSession session, 
+			ModelAndView modelAndView) throws Exception {
+
+		System.out.println("\n:: ==> purchaseBasketList().POST start......]");
+//		User user = (User) session.getAttribute("user");
+		purchase.setBuyer(userService.getUser(buyerId));
+		
+		for(int i=0;i<prodNo.length;i++) {
+			purchase.setPurchaseProd(productService.getProduct(prodNo[i]));
+			purchase.setTranQuantity(tranQuantity[i]);
+			purchaseService.addPurchase(purchase);
+		}
+
+		modelAndView.addObject("purchase",purchase);
+		modelAndView.addObject("list",basketService.purchaseBasketList( buyerId ));
+		
+		basketService.removeBasketList(buyerId);
+		
+		modelAndView.addObject("search", search);
+		modelAndView.setViewName("forward:/basket/purchaseBasketList.jsp");
+
+		System.out.println("[purchaseBasketList().POST end......]\n");
 
 		return modelAndView;
 	}

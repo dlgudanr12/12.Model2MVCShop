@@ -1,4 +1,5 @@
 package spring.model2.mvc.service.basket;
+import java.util.List;
 import java.util.Map;
 
 import spring.model2.mvc.common.Search;
@@ -13,5 +14,9 @@ public interface BasketService {
 	public void removeBasket(Basket basket) throws Exception;
 	
 	public void removeBasketList(String userId) throws Exception;
+	
+	public void updateBasketQuantity(Basket basket) throws Exception;
+	
+	public List<Basket> purchaseBasketList(String userId) throws Exception;
 
 }

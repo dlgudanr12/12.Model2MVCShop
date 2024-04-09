@@ -56,7 +56,7 @@ public class PurchaseRestController {
 	int pageSize;
 
 	public PurchaseRestController() {
-		System.out.println(":: PurchaseController default Contrctor call : " + this.getClass());
+		System.out.println(":: PurchaseRestController default Contrctor call : " + this.getClass());
 	}
 
 	@RequestMapping(value = "json/addPurchase/{prodNo}", method = RequestMethod.GET)

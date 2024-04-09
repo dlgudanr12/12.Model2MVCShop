@@ -18,5 +18,9 @@ public interface BasketDao {
 	public void deleteBasket(Basket basket) throws Exception;
 	
 	public void deleteBasketList(String userId) throws Exception;
+	
+	public void updateBasketQuantity(Basket basket) throws Exception;
+	
+	public List<Basket> purchaseBasketList(String userId);
 
 }

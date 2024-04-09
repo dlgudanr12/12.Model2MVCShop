@@ -89,9 +89,7 @@
 		FROM transaction
 		WHERE
 		buyer_id=#{buyer_Id}
-		ORDER
-		BY
-		tran_no ASC NULLS LAST
+		ORDER BY tran_no ASC NULLS LAST
 	</sql>
 
 	<select id="getPurchaseList" parameterType="map"

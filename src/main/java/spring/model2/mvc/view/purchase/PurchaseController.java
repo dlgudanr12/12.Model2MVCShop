@@ -85,7 +85,6 @@ public class PurchaseController {
 		if (purchase.getTranQuantity() > 0) {
 			purchase.setBuyer(userService.getUser(buyerId));
 			purchase.setPurchaseProd(product);
-			purchase.setTranCode("1");
 
 			modelAndView.addObject("purchase", purchaseService.addPurchase(purchase));
 			modelAndView.setViewName("forward:/purchase/addPurchase.jsp");

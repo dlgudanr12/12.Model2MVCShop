@@ -96,7 +96,7 @@ body {
 					<c:forEach var="basket" items="${list }">
 						<c:set var="i" value="${i+1 }" />
 						<tr class="ct_list_pop" align="left">
-							<td align="center">${i }</td>
+							<td align="center"><input type="hidden" value="${basket.basketNo }">${i }</td>
 							<td><a href="/product/getProduct/${basket.prodNo }/search">
 							${basket.basketProd.prodName}</a></td>
 							<td><span>⒏ </span>
@@ -111,6 +111,7 @@ body {
 				
 				<div class="row">
 					<div class="col-md-12 text-center ">
+					<button type="button" class="btn btn-primary">老褒备概</button>
 					<button type="button" class="btn btn-primary">老褒昏力</button>
 					</div>
 				</div>
@@ -163,6 +164,10 @@ body {
 		document.detailForm.submit();
 	}
 	
+	$("button:contains('老褒备概')").on("click", function() {
+		self.location = "/basket/purchaseBasketList";
+	})
+	
 	$("button:contains('老褒昏力')").on("click", function() {
 		self.location = "/basket/removeBasketList";
 	})
@@ -171,23 +176,35 @@ body {
 		$.each($("tr.ct_list_pop"),function(index){
 			let indexNo=1;
 			let inputValue=$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(3) input");
+			let basketNo=$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(1) input").val();
+			function fncIndex(){
+				$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(1)").text(inputValue.val());
+				let calc=($("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(1)").text().trim()*$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(2)").text().trim());
+				$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(3)").text(calc);
+
+				$.ajax("/basketRest/json/updateBasketQuantity/"+basketNo+"/"+inputValue.val(),
+						{
+							method : "GET",
+							dataType : "json",
+							headers : {
+								"Content-Type" : "application/json"
+							},
+								success : function(JSONData, status) {}
+						})
+			}
 			
 			$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(3) span:contains('⒏')").click(function(){
 				console.log( "inputValue");
 				if(inputValue.val()>1)
 					inputValue.val( (inputValue.val()-indexNo) );
 				
-				$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(1)").text(inputValue.val());
-				let calc=($("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(1)").text().trim()*$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(2)").text().trim());
-				$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(3)").text(calc);
+				fncIndex();
 			})
 			
 			$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(3) span:contains('⒑')").click(function(){
 				inputValue.val( (parseInt( inputValue.val() )+indexNo) );
 				
-				$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(1)").text(inputValue.val());
-				let calc=($("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(1)").text().trim()*$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(2)").text().trim());
-				$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(3)").text(calc);
+				fncIndex();
 			})
 		});
 		

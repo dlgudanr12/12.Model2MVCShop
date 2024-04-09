@@ -38,6 +38,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 	@Override
 	public Purchase addPurchase(Purchase purchase) throws Exception {
 		// 재고 수량과 상품 수량 계산 후 SQL로 각 각 저장하기.
+		purchase.setTranCode("1");
 		int newProdQuantity = productDao.getProduct(purchase.getPurchaseProd().getProdNo()).getProdQuantity()
 				- purchase.getTranQuantity();
 		if (newProdQuantity < 0) {

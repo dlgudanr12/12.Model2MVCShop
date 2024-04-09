@@ -71,5 +71,20 @@
 		FROM basket
 		WHERE user_id=#{value}
 	</delete>
+	
+	<select id="updateBasketQuantity" parameterType="basket">
+		UPDATE basket
+		<set>
+			basket_quantity=#{basketQuantity}
+		</set>
+		<where>
+			basket_no=#{basketNo}
+		</where>
+	</select>
+	
+	<select id="purchaseBasketList" parameterType="map"
+		resultMap="basketSelectMap">
+		<include refid="getBasketListUnit" />
+	</select>
 
 </mapper>

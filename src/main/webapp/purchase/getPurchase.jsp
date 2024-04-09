@@ -24,7 +24,7 @@
 <!-- Bootstrap Dropdown Hover JS -->
 <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 <!-- 다음 지도 -->
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=	faa9f6e25e1a4383862e7e761de66dc7"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=75b183fa243a51103c4118dea097b60e"></script>
 
 <style>
 body {
@@ -308,22 +308,24 @@ body {
 		
 		let divyAddr=$("#divyAddr").text().trim();
 		let divyAddrArr=divyAddr.split('/');
-		let encodeDivyAddr = encodeURIComponent(divyAddrArr[0]);
+		let divyAddrArr2=divyAddrArr[0].split('(');
+		let encodeDivyAddr = encodeURI(divyAddrArr2[0].trim());
 		console.log("encodeDivyAddr : "+encodeDivyAddr);
 		$.ajax( "https://dapi.kakao.com/v2/local/search/address.json?query="+encodeDivyAddr,
 			{
 			method : "GET",
 			dataType : "json",
 			headers : {
-				"Authorization" : "KakaoAK 51766a3b079f70146b3f776193a45d3a",
+				"Authorization" : "KakaoAK 74a9c1aa9918735e1473d2fbaa8faaed",
 				"content-type" : "application/json;charset=UTF-8"
 			},
 			success : function(JSONData, status) {
 				console.log(JSONData);
-				console.log(JSONData.documents[0].x+"/"+JSONData.documents[0].y);
+				console.log(JSONData.documents[0].y+"/"+JSONData.documents[0].x);
 				/* $("#map").append("<br/>"+JSONData.documents[0].x+"/"+JSONData.documents[0].y); */
 				let x=JSONData.documents[0].x;
 				let y=JSONData.documents[0].y;
+				console.log(y+"/"+x);
 				let marker={
 						position: new kakao.maps.LatLng(y,x),
 						text: '배달 주소'
