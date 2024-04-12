@@ -8,8 +8,6 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -69,10 +67,11 @@ public class UserController {
 	}
 	
 	//@RequestMapping("/getUser.do")
-	@RequestMapping( value="getUser", method=RequestMethod.GET )
+	@RequestMapping(value = "getUser", method=RequestMethod.GET)
 	public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
 		
 		System.out.println("/user/getUser : GET");
+		
 		//Business Logic
 		User user = userService.getUser(userId);
 		// Model °ú View ¿¬°á
@@ -105,7 +104,7 @@ public class UserController {
 		
 		String sessionId=((User)session.getAttribute("user")).getUserId();
 		if(sessionId.equals(user.getUserId())){
-			session.setAttribute("user", user);
+			session.setAttribute("user", userService.getUser(user.getUserId()));
 		}
 		
 		//return "redirect:/getUser.do?userId="+user.getUserId();

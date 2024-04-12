@@ -28,6 +28,7 @@ public class Product {
 	private String proTranCode;
 	private int prodQuantity;
 	private List<String> fileList;
+	private int ctgrNo;
 
 //	public Product() {
 //	}

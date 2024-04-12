@@ -169,7 +169,7 @@ body {
 	})
 	
 	$("button:contains('ÀÏ°ý»èÁ¦')").on("click", function() {
-		self.location = "/basket/removeBasketList";
+		self.location.replace("/basket/removeBasketList");
 	})
 	
 	$(function(){

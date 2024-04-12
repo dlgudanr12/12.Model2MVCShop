@@ -165,7 +165,7 @@ body>div.container{
 			<div class="form-group">
 				<label for="text"  class="col-sm-offset-1 col-sm-3 control-label">구매요청사항</label>
 				<div class="col-sm-4">
-					<input type="text" class="form-control" id="receiverRequest"name="receiverRequest"
+					<input type="text" class="form-control" id="divyRequest"name="divyRequest"
 					 placeholder="구매요청사항">
 				</div>
 			</div>

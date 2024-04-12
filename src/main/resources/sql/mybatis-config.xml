@@ -23,6 +23,8 @@
 			type="spring.model2.mvc.service.domain.Purchase" />
 		<typeAlias alias="basket"
 			type="spring.model2.mvc.service.domain.Basket" />
+		<typeAlias alias="category"
+			type="spring.model2.mvc.service.domain.Category" />
 		<typeAlias alias="search"
 			type="spring.model2.mvc.common.Search" />
 	</typeAliases>
@@ -33,6 +35,7 @@
 		<mapper resource="sql/ProductMapper.xml" />
 		<mapper resource="sql/PurchaseMapper.xml" />
 		<mapper resource="sql/BasketMapper.xml" />
+		<mapper resource="sql/CategoryMapper.xml" />
 	</mappers>
 
 </configuration>

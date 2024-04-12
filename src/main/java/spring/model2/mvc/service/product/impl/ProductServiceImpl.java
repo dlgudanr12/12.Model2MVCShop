@@ -71,8 +71,8 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public String getFileName(String imagePath, MultipartFile imageFileName) throws Exception {
 		String originFileName="";
-		System.out.println("imageFileName.getOriginalFilename() : -"+imageFileName.getOriginalFilename()+"-");
-		if(imageFileName.getOriginalFilename()!=null &&imageFileName.getOriginalFilename().trim()!="") {
+		System.out.println("imageFileName.getOriginalFilename() : -"+imageFileName+"-");
+		if( !(imageFileName.getOriginalFilename()==null ||imageFileName.getOriginalFilename().trim().equals("")) ) {
 		originFileName = imageFileName.getOriginalFilename();
 //		UUID uuid = UUID.randomUUID();
 //		String savedFileName = uuid.toString().substring(0,8) + "_" + originFileName;
@@ -82,7 +82,6 @@ public class ProductServiceImpl implements ProductService {
 		
 //		File newFile = new File(imagePath + originFileName);
 //		imageFileName.transferTo(newFile);
-		
 		FileCopyUtils.copy(imageFileName.getInputStream(), new FileOutputStream(imagePath + originFileName));
 		}
 		return originFileName;

@@ -56,14 +56,25 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 			<div class="page-header text-info">
 				<h3>상품 관리</h3>
 			</div>
-
+			
 			<div class="row">
-
 				<div class="col-md-6 text-left">
 					<p class="text-primary">전체 ${resultPage.totalCount} 건수, 현재 ${resultPage.currentPage } 페이지</p>
 				</div>
+			</div>
+			
+			<div class="row">
+			
+				<div class="col-md-3 text-left">
+					<select name="searchCategory" class="form-control" style="width: 140px">
+					<option value="0" ${search.searchCategory=='0' ? "selected" : "" }>전체</option>
+					<c:forEach var="category" items="${listCategory }">
+						<option value="${category.categoryNo }" ${search.searchCategory==category.categoryNo ? "selected" : "" }>${category.categoryName }</option>
+					</c:forEach>
+					</select>
+				</div>
 
-				<div class="col-md-6 text-right">
+				<div class="col-md-9 text-right">
 					<div class="form-group">
 						<span>찾고 싶은 가격 범위 설정</span><input type="text" name="searchPriceLowerLimit"
 							value="${search.searchPriceLowerLimit}" class="form-control"

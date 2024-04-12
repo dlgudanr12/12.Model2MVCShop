@@ -73,6 +73,22 @@ body {
 	
 		<div class="row">
 			<div class="col-xs-4 col-md-2">
+				<strong>분류 </strong>
+			</div>
+			<div class="col-xs-8 col-md-4">
+				<select id="ctgrNo" name="ctgrNo" class="form-control" style="width: 140px">
+					<option value="0" ${( product.ctgrNo==0 ) ? "selected" : "" }>전체</option>
+					<c:forEach var="category" items="${listCategory }">
+						<option value="${category.categoryNo }" ${product.ctgrNo==category.categoryNo ? "selected" : "" }>${category.categoryName }</option>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+
+		<hr />
+	
+		<div class="row">
+			<div class="col-xs-4 col-md-2">
 				<strong>제조일자 </strong>
 			</div>
 			<div class="col-xs-8 col-md-4">

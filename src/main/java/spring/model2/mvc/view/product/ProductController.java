@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import spring.model2.mvc.common.Page;
 import spring.model2.mvc.common.Search;
+import spring.model2.mvc.service.category.CategoryService;
 import spring.model2.mvc.service.domain.Product;
 import spring.model2.mvc.service.product.ProductService;
 
@@ -34,6 +35,10 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productService")
 	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("categoryService")
+	private CategoryService categoryService;
 
 	@Value("${pageUnit}")
 	int pageUnit;
@@ -46,6 +51,13 @@ public class ProductController {
 
 	public ProductController() {
 		System.out.println(":: ProductController default Contrctor call : " + this.getClass());
+	}
+	@RequestMapping(value = "addProduct", method = RequestMethod.GET)
+	public String addProductView(Model model) throws Exception, IOException {
+		System.out.println("[addProduct().GET end......]\n");
+		model.addAttribute("listCategory",categoryService.getCategoryList());
+		System.out.println("[addProduct().GET end......]\n");
+		return "forward:/product/addProductView.jsp";
 	}
 
 //	@RequestMapping("/addProduct.do")
@@ -119,6 +131,7 @@ public class ProductController {
 
 //		product.setFileName(productService.getFileName(imagePath, imageFileName));
 		product.setFileList(productService.getFileList(imagePath, imageFileName));
+		model.addAttribute("listCategory",categoryService.getCategoryList());
 		productService.addProduct(product);
 		model.addAttribute("product", product);
 
@@ -181,6 +194,7 @@ public class ProductController {
 //		cookie.setPath("/");
 //		response.addCookie(cookie);
 
+		model.addAttribute("listCategory",categoryService.getCategoryList());
 		model.addAttribute("menu", menu);
 
 		resultPath = "forward:/product/getProduct.jsp";
@@ -212,7 +226,8 @@ public class ProductController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println("listProduct.resultPage ::" + resultPage);
-
+		
+		model.addAttribute("listCategory", categoryService.getCategoryList());
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
@@ -242,6 +257,7 @@ public class ProductController {
 		product.setFileName(fileString);
 
 		productService.updateProduct(product);
+		model.addAttribute("listCategory",categoryService.getCategoryList());
 		model.addAttribute("product", productService.getProduct(product.getProdNo()));
 
 		System.out.println("[updateProduct().POST end......]\n");

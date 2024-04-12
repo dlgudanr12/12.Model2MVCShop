@@ -105,6 +105,19 @@ body {
 		<hr />
 
 		<div class="row">
+			<div class="col-xs-4 col-md-2 ">
+				<strong>분류</strong>
+			</div>
+			<div class="col-xs-8 col-md-4">
+				<c:forEach var="category" items="${listCategory }">
+					${product.ctgrNo==category.categoryNo ? category.categoryName : "" }
+				</c:forEach>
+			</div>
+		</div>
+
+		<hr />
+
+		<div class="row">
 			<div class="col-xs-4 col-md-2">
 				<strong>제조일자</strong>
 			</div>

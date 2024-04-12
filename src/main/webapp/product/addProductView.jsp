@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=euc-kr" pageEncoding="euc-kr"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html>
 <head>
@@ -59,6 +60,18 @@ body>div.container{
 				<label for="text"  class="col-sm-offset-1 col-sm-3 control-label">상품상세정보</label>
 				<div class="col-sm-4">
 					<input type="text"class="form-control" id="prodDetail" name="prodDetail" placeholder="상품상세정보">
+				</div>
+			</div>
+		
+			<div class="form-group">
+				<label for="text"  class="col-sm-offset-1 col-sm-3 control-label">분류</label>
+				<div class="col-sm-4">
+					<select id="ctgrNo" name="ctgrNo" class="form-control" style="width: 140px">
+					<option value="0" selected >전체</option>
+					<c:forEach var="category" items="${listCategory }">
+						<option value="${category.categoryNo }" >${category.categoryName }</option>
+					</c:forEach>
+				</select>
 				</div>
 			</div>
 		
