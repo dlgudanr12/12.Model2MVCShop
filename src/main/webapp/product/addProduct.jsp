@@ -85,12 +85,11 @@ a[href='#']{
 			<div class="form-group">
 				<label for="text"  class="col-sm-offset-1 col-sm-3 control-label">분류</label>
 				<div class="col-sm-4">
-					<select id="ctgrNo" name="ctgrNo" class="form-control" style="width: 140px">
-					<option value="0"  ${( product.ctgrNo==0 ) ? "selected" : "" } >전체</option>
+					<c:if test="${product.ctgrNo==0}"><strong>전체</strong></c:if>
 					<c:forEach var="category" items="${listCategory }">
-						<option value="${category.categoryNo }"  ${product.ctgrNo==category.categoryNo ? "selected" : "" }>${category.categoryName }</option>
+						<c:if test="${product.ctgrNo==category.categoryNo}">
+						<strong>${category.categoryName}</strong></c:if>
 					</c:forEach>
-				</select>
 				</div>
 			</div>
 

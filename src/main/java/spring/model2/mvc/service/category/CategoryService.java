@@ -8,4 +8,8 @@ public interface CategoryService {
 	
 	public List<Category> getCategoryList() throws Exception;
 	
+	public void addCategory(Category category) throws Exception;
+	
+	public void updateCategory(Category category) throws Exception;
+	
 }

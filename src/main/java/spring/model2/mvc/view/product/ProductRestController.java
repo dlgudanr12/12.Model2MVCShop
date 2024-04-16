@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import spring.model2.mvc.common.Page;
 import spring.model2.mvc.common.Search;
 import spring.model2.mvc.dto.ProductDto;
+import spring.model2.mvc.service.category.CategoryService;
 import spring.model2.mvc.service.domain.Product;
 import spring.model2.mvc.service.product.ProductService;
 
@@ -31,6 +32,10 @@ public class ProductRestController {
 	@Autowired
 	@Qualifier("productService")
 	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("categoryService")
+	private CategoryService categoryService;
 
 	@Value("${pageUnit}")
 //	@Value("${pageUnit!=0 ? pageUnit : 3}")
@@ -103,7 +108,8 @@ public class ProductRestController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println("listProduct.resultPage ::" + resultPage);
-
+		
+		map.put("listCategory", categoryService.getCategoryList());
 		map.put("resultPage", resultPage);
 		map.put("search", search);
 

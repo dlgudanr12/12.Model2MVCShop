@@ -25,5 +25,19 @@
 	<select id="getCategoryList" resultMap="categorySelectMap">
 		<include refid="getCategoryListUnit"/>
 	</select>
+	
+	<insert id="addCategory" parameterType="category">
+		INSERT INTO category 
+		(ctgr_no, ctgr_name, ctgr_detail)
+		VALUES
+		(seq_category_ctgr_no.NEXTVAL,#{categoryName:VARCHAR},#{categoryDetail:VARCHAR})
+	</insert>
+	
+	<update id="updateCategory" parameterType="category">
+		UPDATE category
+		SET ctgr_name=#{categoryName:VARCHAR},
+		ctgr_detail=#{categoryDetail:VARCHAR}
+		WHERE ctgr_no=#{categoryNo}
+	</update>
 
 </mapper>

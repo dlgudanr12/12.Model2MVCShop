@@ -28,4 +28,14 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDao.getCategoryList();
 	}
 
+	@Override
+	public void addCategory(Category category) throws Exception {
+		categoryDao.addCategory(category);
+	}
+
+	@Override
+	public void updateCategory(Category category) throws Exception {
+		categoryDao.updateCategory(category);
+	}
+
 }

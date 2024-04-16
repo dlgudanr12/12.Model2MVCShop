@@ -65,16 +65,20 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 			
 			<div class="row">
 			
-				<div class="col-md-3 text-left">
+				<div class="col-md-6 text-left">
 					<select name="searchCategory" class="form-control" style="width: 140px">
 					<option value="0" ${search.searchCategory=='0' ? "selected" : "" }>전체</option>
 					<c:forEach var="category" items="${listCategory }">
 						<option value="${category.categoryNo }" ${search.searchCategory==category.categoryNo ? "selected" : "" }>${category.categoryName }</option>
 					</c:forEach>
 					</select>
+					<c:if test="${menu=='manage' }">
+					<a href="#" id="addCategory" class="btn btn-default btn-lg">카테고리 추가</a>
+					<a href="#" id="updateCategory" class="btn btn-default btn-lg">수정</a>
+					</c:if>
 				</div>
 
-				<div class="col-md-9 text-right">
+				<div class="col-md-6 text-right">
 					<div class="form-group">
 						<span>찾고 싶은 가격 범위 설정</span><input type="text" name="searchPriceLowerLimit"
 							value="${search.searchPriceLowerLimit}" class="form-control"
@@ -185,6 +189,7 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 	<input class="searchOrderBy" type="hidden" value=" ${search.searchOrderBy}" />
 	<input class="searchPriceLowerLimit" type="hidden" value=" ${search.searchPriceLowerLimit}" />
 	<input class="searchPriceUpperLimit" type="hidden" value=" ${search.searchPriceUpperLimit}" />
+	<input class="searchCategory" type="hidden" value=" ${search.searchCategory}" />
 	
 	</form>
 	
@@ -275,6 +280,7 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 	var searchOrderBy = $("input.searchOrderBy").val().trim();
 	var searchPriceLowerLimit = $("input.searchPriceLowerLimit").val();
 	var searchPriceUpperLimit = $("input.searchPriceUpperLimit").val();
+	let searchCategory=$("input.searchCategory").val();
 	console.log("maxPage : " + maxPage + "\n pageSize : " + pageSize
 			+ "\n currentPage : " + currentPage + "\n searchCondition : "
 			+ searchCondition + "\n searchKeyword : -" + searchKeyword + "-"
@@ -300,7 +306,8 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 								searchKeyword : searchKeyword,
 								searchOrderBy : searchOrderBy,
 								searchPriceLowerLimit : searchPriceLowerLimit,
-								searchPriceUpperLimit : searchPriceUpperLimit
+								searchPriceUpperLimit : searchPriceUpperLimit,
+								searchCategory : searchCategory
 							}),
 							success : function(JSONData, status) {
 								/* console.log(JSONData);
@@ -419,6 +426,17 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 				}) */
 
 		/* $( "tfoot.a:last" ).after( $( "tfoot.a:first" ).clone() ); */
+		
+		$("#addCategory").click(function(){
+			window.open("/category/addCategory.jsp","popWin",
+			"left=300, top=200, width=300, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		});
+		
+		$("#updateCategory").click(function(){
+			window.open("/category/updateCategoryView","popWin",
+			"left=300, top=200, width=300, height=400, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		});
+		
 		var last = document.body.scrollHeight - window.innerHeight;
 		console.log(document.body.scrollHeight + "/" + window.innerHeight);
 		console.log(document.body.scrollWidth + "/" + window.innerWidth);
