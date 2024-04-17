@@ -9,6 +9,8 @@ import spring.model2.mvc.service.domain.Category;
 @Mapper
 public interface CategoryDao {
 	
+	public Category getCategory(int categoryNo) throws Exception;
+	
 	public List<Category> getCategoryList() throws Exception;
 
 	public void addCategory(Category category) throws Exception;

@@ -12,7 +12,13 @@
 		<result property="categoryName" column="ctgr_name" jdbcType="VARCHAR" />
 		<result property="categoryDetail" column="ctgr_detail" jdbcType="VARCHAR" />
 	</resultMap>
-
+	
+	<select id="getCategory" parameterType="integer" resultMap="categorySelectMap">
+		SELECT
+		ctgr_no ,ctgr_name ,ctgr_detail
+		FROM category
+		WHERE ctgr_no=#{value:NUMERIC}
+	</select>
 
 	<!-- SQL : SELECT LIST -->
 	<sql id="getCategoryListUnit">

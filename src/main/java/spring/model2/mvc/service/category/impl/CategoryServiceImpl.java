@@ -24,6 +24,12 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
+	public Category getCategory(int categoryNo) throws Exception {
+		// TODO Auto-generated method stub
+		return categoryDao.getCategory(categoryNo);
+	}
+
+	@Override
 	public List<Category> getCategoryList() throws Exception {
 		return categoryDao.getCategoryList();
 	}

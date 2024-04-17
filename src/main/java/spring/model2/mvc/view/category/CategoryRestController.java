@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import spring.model2.mvc.common.Page;
@@ -31,7 +32,7 @@ import spring.model2.mvc.service.domain.Category;
 import spring.model2.mvc.service.domain.Product;
 import spring.model2.mvc.service.product.ProductService;
 
-@Controller("categoryRestController")
+@RestController("categoryRestController")
 @RequestMapping("/categoryRest/*")
 public class CategoryRestController {
 
@@ -54,6 +55,17 @@ public class CategoryRestController {
 
 	public CategoryRestController() {
 		System.out.println(":: CategoryController default Contrctor call : " + this.getClass());
+	}
+	
+	@RequestMapping(value = "json/getCategory/{categoryNo}", method = RequestMethod.GET)
+	public Map<String,Object> getCategory(@PathVariable("categoryNo") int categoryNo) throws Exception, IOException {
+		System.out.println("[getCategory().GET start......]\n");
+		Map<String,Object> map=new HashMap<String,Object>();
+		map.put("listCategory",categoryService.getCategoryList());
+		map.put("category",categoryService.getCategory(categoryNo));
+		System.out.println("[getCategory().GET end......]\n");
+		
+		return map;
 	}
 	@RequestMapping(value = "json/addCategory", method = RequestMethod.POST)
 	public Map<String,Object> addCategory(@RequestBody Category category) throws Exception, IOException {

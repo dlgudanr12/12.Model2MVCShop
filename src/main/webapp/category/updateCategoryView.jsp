@@ -31,14 +31,14 @@ body>div.container{
 		<h1 class="bg-primary text-center">카테고리 수정</h1>
 		<form name="detailForm" class="form-horizontal">
 		
-		<div class="col-md-6 text-left">
+			<div class="col-md-6 text-left">
 					<select name="categoryNo" class="form-control" style="width: 140px">
 					<option value="0" >전체</option>
 					<c:forEach var="category" items="${listCategory }">
 						<option value="${category.categoryNo }" >${category.categoryName }</option>
 					</c:forEach>
 					</select>
-				</div>
+			</div>
 		
 			<div class="form-group">
 				<label for="text"  class="col-sm-offset-1 col-sm-3 control-label">카테고리 이름</label>
@@ -69,10 +69,26 @@ body>div.container{
 <script type="text/javascript">
 $(function(){
 	$("select[name='categoryNo']").change(function(){
-		/* let categoryOptionName=$("option:contains('selected')").text();
-		$("#categoryName").val(categoryOptionName);
-		let categoryOptionDetail=$("option input").val();
-		$("#categoryDetail").val(categoryOptionDetail); */
+		
+		let categoryNo = $("select[name='categoryNo']").val();
+		console.log("categoryNo : "+categoryNo);
+		$.ajax("/categoryRest/json/getCategory/"+categoryNo,{
+			method : "GET",
+			dataType : "json",
+			headers:{
+				"Content-Type" : "application/json; charset=euc-kr"
+			},
+			success:function(JSONData,status){
+				/* console.log(JSONData.category.categoryName+"/"+JSONData.category.categoryDetail); */
+				if(JSONData.category!=null){
+					$("#categoryName").val(JSONData.category.categoryName);
+					$("#categoryDetail").val(JSONData.category.categoryDetail);
+				}else{
+					$("#categoryName").val("");
+					$("#categoryDetail").val("");
+				}
+			}
+		});
 	});
 	
 	

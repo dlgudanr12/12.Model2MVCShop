@@ -1,5 +1,7 @@
 package spring.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.config.PropertiesFactoryBean;
@@ -18,6 +20,9 @@ import spring.model2.mvc.common.web.LogonCheckInterceptor;
 //=======================================================//
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+	
+//	@Autowired
+//	DataSource dataSource;
 	
 	@Autowired
 	@Qualifier("logonCheckInterceptor")
