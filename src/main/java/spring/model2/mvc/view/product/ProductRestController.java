@@ -32,7 +32,7 @@ public class ProductRestController {
 	@Autowired
 	@Qualifier("productService")
 	private ProductService productService;
-	
+
 	@Autowired
 	@Qualifier("categoryService")
 	private CategoryService categoryService;
@@ -55,33 +55,32 @@ public class ProductRestController {
 
 //	@RequestMapping("/addProduct.do")
 	@RequestMapping(value = "/json/addProduct", method = RequestMethod.POST)
-	public Map<String,Object> addProduct(@RequestBody ProductDto productDto) throws Exception {
-		Product product=productDto.getProduct();
-		List<MultipartFile> imageFileName=productDto.getImageFileName();
-		
+	public Map<String, Object> addProduct(@RequestBody ProductDto productDto) throws Exception {
+		Product product = productDto.getProduct();
+		List<MultipartFile> imageFileName = productDto.getImageFileName();
+
 		System.out.println("\n:: ==> /json/addProduct.POST start......");
 
 		product.setFileList(productService.getFileList(imagePath, imageFileName));
 		productService.addProduct(product);
-		Map<String,Object> map=new HashMap<String,Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("product", product);
 
 		System.out.println("/json/addProduct.POST end......\n");
-		
+
 		return map;
 	}
 
 	@RequestMapping(value = "/json/getProduct/{prodNo}/{menu}", method = RequestMethod.GET)
-	public Map<String,Object> getProduct(@ModelAttribute("product") Product product, @PathVariable String menu,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public Map<String, Object> getProduct(@ModelAttribute("product") Product product, @PathVariable String menu,
+			HttpServletRequest request, HttpServletResponse response) throws Exception {
 		System.out.println("\n:: ==> /json/getProduct.GET start......");
 		System.out.println("ProductController.getProduct.manu : " + menu);
 
 		String resultPath = "";
 		String history = "";
 		String cookieNewValue;
-		Map<String,Object> map=new HashMap<String,Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		product = productService.getProduct(product.getProdNo());
 		map.put("product", product);
 		map.put("menu", menu);
@@ -91,9 +90,7 @@ public class ProductRestController {
 	}
 
 	@RequestMapping(value = "/json/listProduct")
-	public Map<String, Object> listProduct(
-			@RequestBody Search search)
-			throws Exception {
+	public Map<String, Object> listProduct(@RequestBody Search search) throws Exception {
 
 		System.out.println("\n:: ==> /json/listProduct.GET/POST start......");
 
@@ -108,7 +105,7 @@ public class ProductRestController {
 		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
 				pageSize);
 		System.out.println("listProduct.resultPage ::" + resultPage);
-		
+
 		map.put("listCategory", categoryService.getCategoryList());
 		map.put("resultPage", resultPage);
 		map.put("search", search);
@@ -117,11 +114,57 @@ public class ProductRestController {
 
 		return map;
 	}
-	
-	@RequestMapping(value = "/json/fullListProduct",method = RequestMethod.POST)
-	public Map<String, Object> fullListProduct(
-			@RequestBody Search search)
-			throws Exception {
+
+	@RequestMapping(value = "/reactGet/listProduct", method = RequestMethod.GET)
+	public Map<String, Object> reactGetListProduct() throws Exception {
+
+		System.out.println("\n:: ==> /reactGet/listProduct.GET start......");
+		Search search = new Search();
+		search.setCurrentPage(1);
+		search.setPageSize(pageSize);
+
+		Map<String, Object> map = productService.getProductList(search);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+		System.out.println("listProduct.resultPage ::" + resultPage);
+
+		map.put("listCategory", categoryService.getCategoryList());
+		map.put("resultPage", resultPage);
+		map.put("search", search);
+
+		System.out.println("/reactGet/listProduct.GET end......\n");
+
+		return map;
+	}
+	@RequestMapping(value = "/reactPost/listProduct",method=RequestMethod.POST)
+	public Map<String, Object> reactPostlistProduct(@RequestBody Search search) throws Exception {
+
+		System.out.println("\n:: ==> /reactPost/listProduct.POST start......");
+
+		if (search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+
+		search.setPageSize(pageSize);
+
+		Map<String, Object> map = productService.getProductList(search);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
+		System.out.println("listProduct.resultPage ::" + resultPage);
+
+		map.put("listCategory", categoryService.getCategoryList());
+		map.put("resultPage", resultPage);
+		map.put("search", search);
+
+		System.out.println("/reactPost/listProduct.POST end......\n");
+
+		return map;
+	}
+
+	@RequestMapping(value = "/json/fullListProduct", method = RequestMethod.POST)
+	public Map<String, Object> fullListProduct(@RequestBody Search search) throws Exception {
 
 		System.out.println("\n:: ==> /json/fullListProduct.POST start......");
 
@@ -132,7 +175,7 @@ public class ProductRestController {
 		search.setPageSize(pageSize);
 
 		Map<String, Object> map = productService.getFullProductList(search);
-		
+
 		map.put("search", search);
 
 		System.out.println("/json/fullListProduct.POST end......\n");
@@ -142,14 +185,14 @@ public class ProductRestController {
 
 	@RequestMapping(value = "/json/updateProduct", method = RequestMethod.POST)
 	public Map<String, Object> updateProduct(@RequestBody ProductDto productDto) throws Exception {
-		Product product=productDto.getProduct();
-		List<MultipartFile> imageFileName=productDto.getImageFileName();
-		
+		Product product = productDto.getProduct();
+		List<MultipartFile> imageFileName = productDto.getImageFileName();
+
 		System.out.println("\n:: ==> /json/updateProduct.POST start......]");
-		
+
 		product.setFileList(productService.getFileList(imagePath, imageFileName));
 		productService.updateProduct(product);
-		Map<String, Object> map=new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("product", productService.getProduct(product.getProdNo()));
 
 		System.out.println("/json/updateProduct.POST end......]\n");

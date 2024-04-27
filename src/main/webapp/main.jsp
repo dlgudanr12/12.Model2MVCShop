@@ -32,12 +32,14 @@ Bootstrap Dropdown Hover JS
 body {
 	padding-top: 70px;
 }
-p,h3{
-	width : 70%;
+
+p, h3 {
+	width: 70%;
 }
-.jumbotron{
-	width : 80%;
-}
+
+/* .jumbotron {
+	width: 100%;
+} */
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -53,10 +55,14 @@ p,h3{
 	<!--  아래의 내용은 http://getbootstrap.com/getting-started/  참조 -->
 	<div class="container ">
 		<!-- Main jumbotron for a primary marketing message or call to action -->
-		<div class="jumbotron">
-			<h1>Model2MVCShop</h1>
-			<p >J2SE , DBMS ,JDBC , Servlet & JSP, Java Framework , HTML5 , UI Framework 학습 후 Mini-Project
-				진행</p>
+		<div class="row">
+			<div class="col-md-7 col-xs-12">
+				<div class="jumbotron">
+					<h1>Model2MVCShop</h1>
+					<p>J2SE , DBMS ,JDBC , Servlet & JSP, Java Framework , HTML5 ,
+						UI Framework 학습 후 Mini-Project 진행</p>
+				</div>
+			</div>
 		</div>
 	</div>
 
@@ -71,44 +77,48 @@ p,h3{
 		<p>지금 하는 일을 좋아하는 것입니다.</p>
 	</div> -->
 	<div class="row">
-	<div class="container col-md-12" > 
-		<div class="page-header">
-			<h1>Carousel</h1>
+		<div class="container col-md-12">
+			<div class="page-header">
+				<h1>Carousel</h1>
+			</div>
+
+			<div id="carousel-example-generic" class="carousel slide"
+				data-ride="carousel">
+				<ol class="carousel-indicators">
+					<li data-target="#carousel-example-generic" data-slide-to="0"
+						class="active"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+					<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+				</ol>
+
+				<div class="carousel-inner" role="listbox">
+
+					<div class="item active">
+						<img src="http://placehold.it/700X500">
+					</div>
+
+					<div class="item">
+						<img src="http://placehold.it/700X500">
+					</div>
+
+					<div class="item">
+						<img src="http://placehold.it/700X500">
+					</div>
+				</div>
+
+				<a class="left carousel-control" href="#carousel-example-generic"
+					role="button" data-slide="prev" style="width: 600;"> <span
+					class="glyphicon glyphicon-chevron-left" aria-hidden="true"
+					style="width: 600;"></span> <span class="sr-only"
+					style="width: 600;">Previous</span>
+				</a> <a class="right carousel-control" href="#carousel-example-generic"
+					role="button" data-slide="next" style="width: 600;"> <span
+					class="glyphicon glyphicon-chevron-right" aria-hidden="true"
+					style="width: 600;"></span> <span class="sr-only"
+					style="width: 600;">Next</span>
+				</a>
+			</div>
 		</div>
-		
-		<div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-				<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-				<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-			</ol>
-	        
-	        <div class="carousel-inner" role="listbox" >
-	          
-	          <div class="item active">
-	            <img src="http://placehold.it/700X500">
-	          </div>
-	          
-	          <div class="item">
-	            <img src="http://placehold.it/700X500" >
-	          </div>
-	          
-	          <div class="item">
-	            <img src="http://placehold.it/700X500" >
-	          </div>
-	        </div>
-	        
-	        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" style="width:600;">
-	          <span class="glyphicon glyphicon-chevron-left" aria-hidden="true" style="width:600;"></span>
-	          <span class="sr-only" style="width:600;">Previous</span>
-	        </a>
-	        
-	        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next" style="width:600;">
-	          <span class="glyphicon glyphicon-chevron-right" aria-hidden="true" style="width:600;"></span>
-	          <span class="sr-only" style="width:600;">Next</span>
-	        </a>
-	     </div>
-	</div>
 	</div>
 
 </body>

@@ -55,6 +55,7 @@ body>div.container{
 				<label for="text"  class="col-sm-offset-1 col-sm-3 control-label">${i}.상품명 </label>
 				<div class="col-sm-4">
 					<span id="helpBlock" class="help-block"> <strong>${basket.basketProd.prodName }</strong>
+					<!-- 상품 재고보다 높게 표시가됨 -->
 					</span>
 				</div>
 			</div>

@@ -91,7 +91,10 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 							<option value="0" ${search.searchOrderBy=='0' ? "selected" : "" }>상품번호 순</option>
 							<option value="1" ${search.searchOrderBy=='1' ? "selected" : "" }>가격 낮은 순</option>
 							<option value="2" ${search.searchOrderBy=='2'? "selected" : "" }>가격 높은 순</option>
-						</select> <select name="searchCondition" class="form-control" style="width: 120px">
+						</select>
+						<!-- <button type="button" name="searchOrderBy1" class="btn btn-primary">가격 낮은 순</button>
+						<input type="hidden" class="searchOrderBy" name="searchOrderBy" /> -->
+						<select name="searchCondition" class="form-control" style="width: 120px">
 							<option value="0" ${search.searchCondition=='0' ? "selected" : "" }>상품번호</option>
 							<option value="1" ${search.searchCondition=='1' ? "selected" : "" }>상품명</option>
 							<option value="2" ${search.searchCondition=='2'? "selected" : "" }>상품가격</option>
@@ -197,6 +200,11 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 </html>
 
 <script type="text/javascript">
+/* $(function(){
+	$("button[name='searchOrderBy1']").click(function(){
+		$("input[name='searchOrderBy']").val(1)
+	})
+}); */
 	function fncGetList(currentPage) {
 		//document.getElementById("currentPage").value = currentPage;
 		//document.detailForm.submit();
@@ -290,6 +298,13 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 	let j = 0;
 	function fncScrollEvent() {
 		++currentPage;
+		/* searchOrderBy = $("input.searchOrderBy").val().trim();
+		console.log("maxPage : " + maxPage + "\n pageSize : " + pageSize
+				+ "\n currentPage : " + currentPage + "\n searchCondition : "
+				+ searchCondition + "\n searchKeyword : -" + searchKeyword + "-"
+				+ "\n searchOrderBy : " + searchOrderBy
+				+ "\n searchPriceLowerLimit : " + searchPriceLowerLimit
+				+ "\n searchPriceUpperLimit : " + searchPriceUpperLimit); */
 		console.log(currentPage);
 		$
 				.ajax(
@@ -397,6 +412,7 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 								fncPanelPrimary();
 							}
 						})/* end of '$.ajax' */
+						
 	}
 	
 		$(function(){
@@ -449,7 +465,9 @@ String searchKeyword = CommonUtil.null2str(search.getSearchKeyword());
 		console.log("currentPage < maxPage :"+(currentPageInt < maxPageInt));
 		
 		if (currentPageInt < maxPageInt) {
-			fncScrollEvent();
+			setTimeout(function() {
+					fncScrollEvent();
+			}, 300);
 			fncScrollEvent();
 
 			$(window).scroll(function() {

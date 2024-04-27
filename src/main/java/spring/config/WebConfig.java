@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -20,9 +22,6 @@ import spring.model2.mvc.common.web.LogonCheckInterceptor;
 //=======================================================//
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-	
-//	@Autowired
-//	DataSource dataSource;
 	
 	@Autowired
 	@Qualifier("logonCheckInterceptor")
@@ -47,4 +46,12 @@ public class WebConfig implements WebMvcConfigurer {
 		return configurer;
 	}
 
+//	@Override
+//	public void addCorsMappings(CorsRegistry registry) {
+//		registry.addMapping("/**")
+//        .allowedOrigins("*") // 원하는 도메인으로 설정
+//        .allowedMethods("POST, GET, DELETE, PUT,DELETE,OPTIONS") // 허용할 HTTP 메서드 설정
+//        .allowedHeaders("x-requested-with, origin, content-type, accept")
+//        .maxAge(3600);
+//	} // 잘안됨 
 }

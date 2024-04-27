@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -115,6 +116,21 @@ public class UserRestController {
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 		}
+		
+		return dbUser;
+	}
+	
+	@RequestMapping(value = "react/login" , method=RequestMethod.POST )
+	public User reactLogin(	@RequestBody User user) throws Exception{
+	
+		System.out.println("/user/react/login : POST");
+		//Business Logic
+		System.out.println("::"+user);
+		User dbUser=userService.getUser(user.getUserId());
+		
+//		if( user.getPassword().equals(dbUser.getPassword())){
+//			session.setAttribute("user", dbUser);
+//		}
 		
 		return dbUser;
 	}
