@@ -241,17 +241,26 @@ public class ProductController {
 
 	@RequestMapping(value = "updateProduct", method = RequestMethod.POST)
 	public String updateProduct(@ModelAttribute("product") Product product,
-			@RequestParam("imageFileName") MultipartFile imageFileName,
-			@RequestParam("imageFileName2") String imageFileName2, Model model) throws Exception {
+			@RequestParam("imageFileName") List<MultipartFile> imageFileName,
+			@RequestParam(name="imageFileName2", required = false) String[] imageFileName2, Model model) throws Exception {
 
 		System.out.println("\n:: ==> updateProduct().POST start......]");
 
 //		String temDir = "C:\\Users\\bitcamp\\git\\07.Model2MVCShop(URI,pattern)\\07.Model2MVCShop(URI,pattern)\\src\\main\\webapp\\images\\uploadFiles\\";
 //		String temDir = "C:/Users/SWCOM/git/07.Model2MVCShop-URI-pattern-/07.Model2MVCShop(URI,pattern)/src/main/webapp/images/uploadFiles/";
-		String fileString=imageFileName2.trim();
-		String fileString2=productService.getFileName(imagePath, imageFileName).trim();
+//		String fileString=imageFileName2.trim();
+		String fileString="";
+		if(imageFileName2!=null) {
+		for(int i=0;i<imageFileName2.length;i++) {
+			fileString+=((i!=0) ? ", "+imageFileName2[i] : imageFileName2[i]);
+		}}
+		System.out.println("imageFileName2, fileString : "+fileString);
+		String fileString2=productService.getFileList(imagePath, imageFileName).toString();
+		fileString2=fileString2.substring(fileString2.indexOf("[") + 1,
+				fileString2.lastIndexOf("]"));
+		System.out.println("imageFileName, fileString2 : "+fileString2);
 		if(fileString2!="") {
-			fileString+=", "+fileString2;
+			fileString+=((fileString!="") ? (", "+fileString2) : fileString2);
 		}
 		
 		product.setFileName(fileString);

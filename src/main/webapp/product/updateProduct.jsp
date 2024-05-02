@@ -119,8 +119,8 @@ body {
 			</div>
 			<div class="col-xs-8 col-md-4">
 				<c:forEach var="fileName" items="${product.fileList}">
-						<img src="/images/uploadFiles/${fileName}" height="200"
-						align="absmiddle" /><br/><span id="fileNames">${fileName}</span><br/>
+						<span class="fileNames"><img src="/images/uploadFiles/${fileName}" height="200" />
+						<br/><input type="hidden" name="imageFileName2" value="${fileName }"/>${fileName}<button>Image 삭제</button><br/></span>
 				</c:forEach>
 			</div>
 		</div>
@@ -134,7 +134,7 @@ body {
 			<div class="col-xs-8 col-md-4">
 				<input type="file" name="imageFileName" multiple 
 				class="image" />
-				<input type="hidden" name="imageFileName2" value="${product.fileName }"/>
+				<%-- <input type="hidden" name="imageFileName2" value="${product.fileName }"/> --%>
 			</div>
 		</div>
 
@@ -350,11 +350,21 @@ function fncAddProduct(){
 }
 
 $(function(){
-	$("button").mouseenter(function() {
+	$("button:contains('수정'),button:contains('취소')").mouseenter(function() {
 		$(this).css("font-size", "20px");
 	}).mouseleave(function() {
 		$(this).css("font-size", $("body").css("font-size"));
 	})
+	
+	let indexNo=1;
+	$.each($("span.fileNames"),function(index){
+		
+		$("span.fileNames:nth-child("+(index+indexNo)+") button").click(function(){
+			console.log("삭제 : "+(index+indexNo));
+			$("span.fileNames:nth-child("+(index+indexNo)+")").empty();
+		});
+	})
+	
 	$("button:contains('수정')").on("click", function() {
 		//alert($("td.ct_btn01:contains('등록')").html());
 		fncAddProduct();

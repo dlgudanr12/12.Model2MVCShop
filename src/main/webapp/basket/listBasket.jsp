@@ -101,6 +101,7 @@ body {
 							${basket.basketProd.prodName}</a></td>
 							<td><span>¢∏ </span>
 							<input name="basketQuantity" value=" ${basket.basketQuantity }" style="width:30px;" readonly="readonly"/>
+							<input name="prodQuantity" value=" ${basket.basketProd.prodQuantity }" type="hidden"/>
 							<span> ¢∫</span></td>
 							<td><span>${basket.basketQuantity }</span> * <span>${basket.basketProd.price }</span> = <span>${basket.basketQuantity*basket.basketProd.price }</span></td>
 							<td><a href="/basket/removeBasket/${basket.basketNo }"> ªË¡¶</a></td>
@@ -175,8 +176,10 @@ body {
 	$(function(){
 		$.each($("tr.ct_list_pop"),function(index){
 			let indexNo=1;
-			let inputValue=$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(3) input");
+			let inputValue=$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(3) input[name='basketQuantity']");
 			let basketNo=$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(1) input").val();
+			let prodQuantity=$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(3) input[name='prodQuantity']");
+			console.log("prodQuantity"+prodQuantity.val());
 			function fncIndex(){
 				$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(1)").text(inputValue.val());
 				let calc=($("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(1)").text().trim()*$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(4) span:nth-child(2)").text().trim());
@@ -198,11 +201,14 @@ body {
 				if(inputValue.val()>1)
 					inputValue.val( (inputValue.val()-indexNo) );
 				
-				fncIndex();
+					fncIndex();
 			})
 			
 			$("tr.ct_list_pop:nth-child("+(index+indexNo)+") td:nth-child(3) span:contains('¢∫')").click(function(){
-				inputValue.val( (parseInt( inputValue.val() )+indexNo) );
+				if(parseInt( inputValue.val() )<parseInt( prodQuantity.val() ) ){
+					inputValue.val( (parseInt( inputValue.val() )+indexNo) );
+					console.log("inputValue.val()<prodQuantity.val()"+prodQuantity.val()+">"+inputValue.val());
+			 	} 
 				
 				fncIndex();
 			})

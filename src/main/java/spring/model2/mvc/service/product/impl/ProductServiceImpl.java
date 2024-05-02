@@ -71,7 +71,6 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public String getFileName(String imagePath, MultipartFile imageFileName) throws Exception {
 		String originFileName="";
-		System.out.println("imageFileName.getOriginalFilename() : -"+imageFileName+"-");
 		if( !(imageFileName.getOriginalFilename()==null ||imageFileName.getOriginalFilename().trim().equals("")) ) {
 		originFileName = imageFileName.getOriginalFilename();
 //		UUID uuid = UUID.randomUUID();
@@ -91,9 +90,12 @@ public class ProductServiceImpl implements ProductService {
 	public List<String> getFileList(String imagePath, List<MultipartFile> imageFileName) throws Exception {
 		List<String> originFileName=new ArrayList<String>();
 		for(MultipartFile multipartFile:imageFileName) {
+			if( !(multipartFile.getOriginalFilename()==null ||multipartFile.getOriginalFilename().trim().equals("")) ) {
 			originFileName.add(multipartFile.getOriginalFilename());
 			FileCopyUtils.copy(multipartFile.getInputStream(), new FileOutputStream(imagePath + multipartFile.getOriginalFilename()));
+			}
 		}
+		System.out.println("originFileName.toString() :"+originFileName.toString());
 		return originFileName;
 	}
 }
