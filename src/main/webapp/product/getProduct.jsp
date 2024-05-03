@@ -160,6 +160,7 @@ body {
 					<button type="button" class="btn btn-primary">구매</button>
 				</c:if>
 				<button type="button" class="btn btn-primary">이전</button>
+				<button type="button" class="btn btn-primary">목록으로</button>
 			</div>
 		</div>
 
@@ -318,6 +319,9 @@ body {
 		$("button:contains('이전')").on("click", function() {
 			//alert($("td.ct_btn01:contains('등록')").html());
 			history.go(-1);
+		})
+		$("button:contains('목록으로')").on("click", function() {
+			self.location = "/product/listProduct/${menu}";
 		})
 	});
 </script>

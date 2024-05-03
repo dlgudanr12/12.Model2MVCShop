@@ -29,7 +29,8 @@ public class CorsFilter implements Filter {
 //		System.out.println("CrossOriginResourceSharing.doFilter()");
 		// TODO Auto-generated method stub
 		HttpServletResponse res = (HttpServletResponse) response; 
-		res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); //허용대상 도메인
+//		res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000"); //허용대상 도메인
+		res.setHeader("Access-Control-Allow-Origin", "*"); //허용대상 도메인
 		res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT"); 
 		res.setHeader("Access-Control-Max-Age", "3600"); 
 		res.setHeader("Access-Control-Allow-Headers", "x-requested-with, origin, content-type, accept"); 
